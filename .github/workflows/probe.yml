@@ -9,7 +9,7 @@ jobs:
     permissions: {}
     steps:
       - run: echo "probe sha=$GITHUB_SHA ref=$GITHUB_REF action=${{ github.event.action }}"
-  accept-head:
+  mk-head-check:
     runs-on: ubuntu-latest
     permissions:
       checks: write
