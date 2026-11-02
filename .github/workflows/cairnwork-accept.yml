@@ -11,7 +11,9 @@ concurrency:
   group: cairnwork-accept-${{ github.event.pull_request.number }}
   cancel-in-progress: false
 
-permissions: {}
+permissions:
+  contents: read
+  pull-requests: read
 
 jobs:
   accept:
