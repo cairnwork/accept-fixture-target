@@ -1,0 +1,28 @@
+name: probe
+run-name: "probe action=${{ github.event.action }} draft=${{ github.event.pull_request.draft }}"
+on:
+  pull_request_target:
+permissions: {}
+jobs:
+  accept-probe:
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - run: echo "probe sha=$GITHUB_SHA ref=$GITHUB_REF action=${{ github.event.action }}"
+  accept-head:
+    runs-on: ubuntu-latest
+    permissions:
+      checks: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          gh api -X POST "repos/$REPO/check-runs" -f name=accept-head -f head_sha="$HEAD_SHA" -f status=completed -f conclusion=failure -f 'output[title]=api accept-head' -f 'output[summary]=created via Checks API'
+  accept-skipped:
+    if: false
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - run: echo never

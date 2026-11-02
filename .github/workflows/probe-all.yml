@@ -1,0 +1,12 @@
+name: probe-all
+run-name: "probe-all action=${{ github.event.action }} draft=${{ github.event.pull_request.draft }}"
+on:
+  pull_request_target:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft, edited, labeled]
+permissions: {}
+jobs:
+  accept-all:
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - run: echo "action=${{ github.event.action }}"

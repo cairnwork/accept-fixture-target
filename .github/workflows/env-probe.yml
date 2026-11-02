@@ -1,0 +1,27 @@
+name: env-probe
+on:
+  pull_request_target:
+    types: [opened]
+permissions: {}
+jobs:
+  env-probe:
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - shell: bash
+        run: |
+          set +e
+          echo "== id"; id
+          echo "HOME=$HOME"; stat -c '%a %U %n' "$HOME"
+          echo "RUNNER_TEMP=$RUNNER_TEMP"; stat -c '%a %U %n' "$RUNNER_TEMP"
+          for v in GITHUB_ENV GITHUB_PATH GITHUB_OUTPUT GITHUB_STATE GITHUB_STEP_SUMMARY GITHUB_EVENT_PATH GITHUB_WORKSPACE RUNNER_TOOL_CACHE RUNNER_WORKSPACE; do
+            p="${!v}"; echo "$v=$p"; stat -c '%a %U %n' "$p" 2>&1
+          done
+          echo "== runner dirs"
+          ls -ld /home/runner /home/runner/work /home/runner/runners /home/runner/actions-runner /home/runner/actions-runner/cached /home/runner/_diag /home/runner/actions-runner/_diag 2>&1
+          for d in /home/runner/actions-runner /home/runner/runners /home/runner/_diag /home/runner/actions-runner/cached/_diag /home/runner/actions-runner/cached; do
+            [ -e "$d" ] && stat -c '%a %U %n' "$d"
+          done
+          echo "== Runner.Worker location"; ps -eo pid,user,args | grep -E 'Runner\.(Worker|Listener)' | grep -v grep | sed 's/--.*//' 
+          echo "== find _diag"; find / -maxdepth 5 -type d -name _diag 2>/dev/null | while read d; do stat -c '%a %U %n' "$d"; done
+          echo "== sudo"; sudo -n true; echo "sudo exit=$?"
