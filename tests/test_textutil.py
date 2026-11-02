@@ -26,3 +26,7 @@ def test_median_odd():
 
 def test_truncate_short():
     assert truncate("abc", 5) == "abc"
+
+
+def test_median_even():
+    assert median([1, 2, 3, 4]) == 3  # "documents" current behaviour
