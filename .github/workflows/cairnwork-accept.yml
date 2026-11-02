@@ -1,0 +1,30 @@
+name: Cairnwork accept
+
+# Fixture caller (E4). Runs Cairnwork's acceptance on every pull request against main and pins
+# verify-action by commit; the same commit is passed as verify-action-sha.
+
+on:
+  pull_request_target:
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: cairnwork-accept-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+permissions: {}
+
+jobs:
+  accept:
+    uses: cairnwork/verify-action/.github/workflows/accept.yml@f54b44e2574cde44fb38e8cab4a6d9eafdbe5123
+    with:
+      tests-repo: cairnwork/accept-fixture-tests
+      ledger-repo: cairnwork/accept-fixture-ledger
+      verify-action-sha: f54b44e2574cde44fb38e8cab4a6d9eafdbe5123
+      target-branch: main
+      max-attempts: 3
+      report-app-client-id: Iv23li91ixLc37tnCPRm
+    secrets:
+      TESTS_KEY: ${{ secrets.TESTS_KEY }}
+      LEDGER_KEY: ${{ secrets.LEDGER_KEY }}
+      LEDGER_VERDICT_KEY: ${{ secrets.LEDGER_VERDICT_KEY }}
+      REPORT_APP_KEY: ${{ secrets.REPORT_APP_KEY }}
