@@ -14,7 +14,7 @@ def chunk(items, n):
     if n <= 0:
         raise ValueError("n must be positive")
     out = []
-    for i in range(0, len(items) - n + 1, n):  # BUG (issue 2): drops the last partial chunk
+    for i in range(0, len(items), n):
         out.append(items[i:i + n])
     return out
 
