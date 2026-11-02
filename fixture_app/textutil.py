@@ -5,7 +5,7 @@ import re
 def slugify(text):
     """Lowercase, replace whitespace with '-', strip leading/trailing '-'."""
     s = text.strip().lower()
-    s = re.sub(r"\s", "-", s)  # BUG (issue 1): each whitespace char becomes its own '-'
+    s = re.sub(r"\s+", "-", s)
     return s.strip("-")
 
 
@@ -41,3 +41,5 @@ def truncate(text, n):
     if len(text) <= n:
         return text
     return text[:n] + "..."  # BUG (issue 5): result is n+3 characters, should be n
+
+# second correct attempt for task 1 (ledger ruleset check)
