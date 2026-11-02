@@ -1,0 +1,10 @@
+name: accept-head-pr
+on:
+  pull_request:
+permissions: {}
+jobs:
+  accept-head:
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - run: exit 0
