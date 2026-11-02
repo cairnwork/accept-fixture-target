@@ -17,11 +17,11 @@ permissions:
 
 jobs:
   accept:
-    uses: cairnwork/verify-action/.github/workflows/accept.yml@f54b44e2574cde44fb38e8cab4a6d9eafdbe5123
+    uses: cairnwork/verify-action/.github/workflows/accept.yml@40e25bdab3c3e3f88bb23e088ec307d90ee70aac
     with:
       tests-repo: cairnwork/accept-fixture-tests
       ledger-repo: cairnwork/accept-fixture-ledger
-      verify-action-sha: f54b44e2574cde44fb38e8cab4a6d9eafdbe5123
+      verify-action-sha: 40e25bdab3c3e3f88bb23e088ec307d90ee70aac
       target-branch: main
       max-attempts: 3
       report-app-client-id: Iv23li91ixLc37tnCPRm
