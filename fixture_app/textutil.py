@@ -5,7 +5,7 @@ import re
 def slugify(text):
     """Lowercase, replace whitespace with '-', strip leading/trailing '-'."""
     s = text.strip().lower()
-    s = re.sub(r"\s", "-", s)  # BUG (issue 1): each whitespace char becomes its own '-'
+    s = re.sub(r"\s+", "-", s)
     return s.strip("-")
 
 
