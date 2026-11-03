@@ -1,7 +1,8 @@
 name: Cairnwork accept
 
 # Fixture caller (E4). Runs Cairnwork's acceptance on every pull request against main and pins
-# verify-action by commit; the same commit is passed as verify-action-sha.
+# verify-action by commit; the same commit is passed as verify-action-sha. Pinned to main 325ad73
+# (#29 signed verdicts, #36 J1_RUN_NOT_FOUND, #37 LEDGER_KEY_MISSING at J1, #38 key-check job).
 
 on:
   pull_request_target:
@@ -17,14 +18,15 @@ permissions:
 
 jobs:
   accept:
-    uses: cairnwork/verify-action/.github/workflows/accept.yml@cc266911c30519798ebbe0a8b7b954945766b0a8
+    uses: cairnwork/verify-action/.github/workflows/accept.yml@325ad738a4aa919464ce962c94bc0b099a46bb45
     with:
       tests-repo: cairnwork/accept-fixture-tests
       ledger-repo: cairnwork/accept-fixture-ledger
-      verify-action-sha: cc266911c30519798ebbe0a8b7b954945766b0a8
+      verify-action-sha: 325ad738a4aa919464ce962c94bc0b099a46bb45
       target-branch: main
       max-attempts: 3
       report-app-client-id: Iv23li91ixLc37tnCPRm
+      ledger-verdict-pubkey: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGa45hq/EzbpyWlS0+APApPm8tAk089/adgXCsaA7xrs"
     secrets:
       TESTS_KEY: ${{ secrets.TESTS_KEY }}
       LEDGER_KEY: ${{ secrets.LEDGER_KEY }}
